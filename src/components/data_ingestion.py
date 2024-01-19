@@ -1,11 +1,19 @@
 import os 
 import sys
 import pandas as pd
+
+
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
+
+
 from src.exception import CustomException
 from src.logger import logging
 from src.components.data_transformation import DataTransformation
+
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
 
 @dataclass
 class DataIngestionConfig:
@@ -49,4 +57,7 @@ if __name__ == '__main__':
     train_data, test_data = obj.initiate_Data_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_data_transformation(train_data, test_data)
+    train_arr,tes_arr,_=data_transformation.initiate_data_transformation(train_data, test_data)
+
+    modeltrainer =  ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,tes_arr))
